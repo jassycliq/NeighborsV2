@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/history"
+    app:startDestination="@id/navigation_recorded_clips">
+
+    <fragment
+        android:id="@+id/navigation_recorded_clips"
+        android:name="com.playbowdogs.neighbors.ui.recordedClips.RecordedClipsListFragment"
+        android:label="@string/title_recordedClips"
+        tools:layout="@layout/fragment_recorded_clips_list"
+        />
+
+</navigation>

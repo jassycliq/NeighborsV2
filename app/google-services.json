@@ -1,0 +1,115 @@
+{
+  "project_info": {
+    "project_number": "189552313612",
+    "firebase_url": "https://neighbors-8a7a5.firebaseio.com",
+    "project_id": "neighbors-8a7a5",
+    "storage_bucket": "neighbors-8a7a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189552313612:android:86f252e271f0f151d8f529",
+        "android_client_info": {
+          "package_name": "com.playbowdogs.neighbors"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189552313612-hjudqr58ivum0n93bt5eo6evstcdh9d1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.playbowdogs.neighbors",
+            "certificate_hash": "18541ea7f48d14422e003c3efdea3a1431657ce6"
+          }
+        },
+        {
+          "client_id": "189552313612-kuh9rdu6v0q98mb2o7tljkapfj7rfv7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG6N56-sZb2XhzDjzaADsZ2tqDJGpKLTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189552313612-kuh9rdu6v0q98mb2o7tljkapfj7rfv7q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "189552313612-jn95m1l8etj5dv6dq2nntsg362pgqmlj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.playbowdogs.DogSitterApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189552313612:android:2985b0c42e49a980d8f529",
+        "android_client_info": {
+          "package_name": "com.playbowdogs.neighbors.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189552313612-6flfdtu4otuh7rh8oaillh5fua3tk9s7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.playbowdogs.neighbors.android",
+            "certificate_hash": "5fb5b9723d612e493db6a665b316ae506f829f17"
+          }
+        },
+        {
+          "client_id": "189552313612-78ioiki7eam0mlkqeuodgor3he11abdu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.playbowdogs.neighbors.android",
+            "certificate_hash": "18541ea7f48d14422e003c3efdea3a1431657ce6"
+          }
+        },
+        {
+          "client_id": "189552313612-9cdd61vd75idjdl8f1i7i7gtucgqv107.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.playbowdogs.neighbors.android",
+            "certificate_hash": "58e49ec8a352ec450deaa4900e9801d43045f669"
+          }
+        },
+        {
+          "client_id": "189552313612-kuh9rdu6v0q98mb2o7tljkapfj7rfv7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG6N56-sZb2XhzDjzaADsZ2tqDJGpKLTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189552313612-kuh9rdu6v0q98mb2o7tljkapfj7rfv7q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "189552313612-jn95m1l8etj5dv6dq2nntsg362pgqmlj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.playbowdogs.DogSitterApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

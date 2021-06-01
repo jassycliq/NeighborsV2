@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main_app"
+        app:startDestination="@id/on_board"
+        >
+
+    <fragment
+            android:id="@+id/on_board"
+            android:name="com.playbowdogs.neighbors.ui.firebaseUI.OnBoardViewPager"
+            android:label="@string/title_live_view"
+            tools:layout="@layout/fragment_on_boarding_pager" />
+
+</navigation>

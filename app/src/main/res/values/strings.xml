@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Neighbor</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="no_internet_connection">No internet connection detected</string>
+    <string name="user_canceled">Sign in canceled</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="action_sign_out">Sign out</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="title_activity_bottom_nav">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_recordedClips">Recorded Clips</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="dialog_message_google_play_service">Cannot continue without Google Play Services. Please make sure you have a Google Play Certified device.</string>
+    <string name="dialog_title_google_play_services">Google Play Services Unavailable</string>
+    <string name="dialog_title_root_found">Root Found</string>
+    <string name="dialog_message_root_found">Your device is currently rooted! \nCannot continue with compromised security.</string>
+    <string name="firebase_message_channel_name">Private messages</string>
+    <string name="firebase_message_channel_description">Notifications for messages between dog sitter and client</string>
+    <string name="other_notifications_channel_description">Other notifications</string>
+    <string name="other_notifications_channel_name">Other notifications</string>
+    <string name="acuity_account_found">Hey there Neighbor!</string>
+    <string name="acuity_account_found_message">Successfully found your Acuity account and verified your info.</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_live_view">Live View</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_recorded_clip_fullscreen">FullscreenActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_dogsitter">Dog Sitter</string>
+    <string name="camera_details_no_appointment">No appointment found for today</string>
+    <string name="title_client">Client</string>
+    <string name="title_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="general_header">General</string>
+
+    <!-- Sync Preferences -->
+    <string name="sign_out_title">Sign Out</string>
+    <string name="live_video_channel_name">Live videos</string>
+    <string name="live_channel_description">Notifications sent by dog sitter to client about current Live view</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+
+</resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="appointment"
+            type="com.playbowdogs.neighbors.data.model.AcuityAppointment" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.calendar.CalendarFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mcv_selectionMode="none"
+                app:mcv_showOtherDates="all" />
+
+            <TextView
+                android:id="@+id/no_appointments_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="No appointments found"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/calendarView"
+                app:layout_constraintEnd_toEndOf="@id/calendarView"
+                app:layout_constraintStart_toStartOf="@id/calendarView"
+                app:layout_constraintTop_toTopOf="@id/calendarView"
+                tools:visibility="visible" />
+
+            <include
+                android:id="@+id/progress_view"
+                layout="@layout/progress_view"
+                android:visibility="gone" />
+
+            <!--            <include-->
+            <!--                android:id="@+id/appointment_card"-->
+            <!--                layout="@layout/appointment_card"-->
+            <!--                bind:appointment="@={appointment}"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/calendarView" />-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</layout>
