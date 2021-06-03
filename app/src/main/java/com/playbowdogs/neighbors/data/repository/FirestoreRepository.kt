@@ -1,10 +1,7 @@
 package com.playbowdogs.neighbors.data.repository
 
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
-import com.google.firebase.ktx.Firebase
 import com.playbowdogs.neighbors.data.model.*
 import com.playbowdogs.neighbors.utils.getDataFlow
 import kotlinx.coroutines.*
@@ -20,6 +17,8 @@ class FirestoreRepository : KoinComponent {
     private val firebaseAuth: FirebaseAuthRepository by inject()
 
     private val firestoreDB = FirebaseFirestore.getInstance()
+
+    private val user = firebaseAuth.getUserAfterSignIn()
 
     private fun getUserTypeDocument(): Task<DocumentSnapshot>? {
         return firebaseAuth.getUserAfterSignIn()?.let {
@@ -280,5 +279,21 @@ class FirestoreRepository : KoinComponent {
         } else {
             null
         }
+    }
+
+    @ExperimentalCoroutinesApi
+    suspend fun getAppointmentsFlow(): Flow<List<AcuityAppointment?>>? {
+        return user?.let {
+            firestoreDB.collection("AcuityAppointments").document(it.uid).collection("Appointments").getDataFlow { querySnapshot ->
+                querySnapshot?.documents?.map { snapshot ->
+                    getAppointmentListItemFromSnapshot(snapshot)
+                } ?: listOf()
+            }
+        }
+    }
+
+    // Parses the document snapshot to the desired object
+    private fun getAppointmentListItemFromSnapshot(documentSnapshot: DocumentSnapshot): AcuityAppointment? {
+        return documentSnapshot.toObject(AcuityAppointment::class.java)
     }
 }

@@ -35,6 +35,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(FragmentCalendarB
         super.onViewCreated(view, savedInstanceState)
         AndroidThreeTen.init(activity)
 
+        lifecycleScope.launchWhenCreated {
+            viewModel.getAppointments()
+        }
+
         setInsetPadding(view)
         setCalendarTheme()
         setOnClickListeners()
@@ -54,10 +58,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(FragmentCalendarB
         binding.calendarView.rightArrow?.setTint(requireActivity().getColor(com.playbowdogs.neighbors.R.color.onSurface))
         binding.calendarView.setDateTextAppearance(requireActivity().getColor(com.playbowdogs.neighbors.R.color.onSurface))
 
-        binding.calendarView.state()?.edit()
-            ?.setMinimumDate(viewModel.threeMonthsBefore)
-            ?.setMaximumDate(viewModel.sixMonthsAhead)
-            ?.commit()
+//        binding.calendarView.state()?.edit()
+//            ?.setMinimumDate(viewModel.threeMonthsBefore)
+//            ?.setMaximumDate(viewModel.sixMonthsAhead)
+//            ?.commit()
     }
 
     private fun setOnClickListeners() {
@@ -67,7 +71,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(FragmentCalendarB
     }
 
     private fun setObservers() {
-        viewModel.getCustomerAppointments().observe(viewLifecycleOwner) {
+        viewModel.appointments.observe(viewLifecycleOwner) {
             it?.let { acuityAppointments ->
                 when {
                     acuityAppointments.isEmpty() -> {
@@ -77,12 +81,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(FragmentCalendarB
                     else -> {
                         lifecycleScope.launch {
                             acuityAppointments.reversed().forEach { appointment ->
-                                val calendarDay = CalendarDay.from(
-                                    LocalDate.parse(
-                                        appointment.datetime,
-                                        formatter
-                                    )
-                                )
+                                val calendarDay = CalendarDay.from(LocalDate.parse(
+                                    appointment?.datetime,
+                                    formatter
+                                ))
                                 chosenDayArray.add(calendarDay)
                                 viewModel.calendarDaySet.value =
                                     chosenDayArray.toSet()

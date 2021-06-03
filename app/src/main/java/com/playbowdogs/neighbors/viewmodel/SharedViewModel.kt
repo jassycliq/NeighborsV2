@@ -1,5 +1,6 @@
 package com.playbowdogs.neighbors.viewmodel
 
+import android.content.SharedPreferences
 import com.playbowdogs.neighbors.data.model.FirestoreAcuityUser
 import com.playbowdogs.neighbors.data.model.FirestoreAngelCamUser
 import com.playbowdogs.neighbors.data.model.FirestoreUser
@@ -10,6 +11,7 @@ import com.playbowdogs.neighbors.data.repository.FirestoreRepository
 import com.playbowdogs.neighbors.intent.SharedEffect
 import com.playbowdogs.neighbors.intent.SharedState
 import com.playbowdogs.neighbors.utils.BaseViewModel
+import com.playbowdogs.neighbors.utils.USER_UNIQUE_IDENTIFICATION
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -29,8 +31,15 @@ class SharedViewModel(
     private val acuityRepo: AcuityRepository,
     private val firestoreRepo: FirestoreRepository,
     private val firebaseAuthRepo: FirebaseAuthRepository,
+    private val sharedPrefEditor: SharedPreferences.Editor,
     scope: CoroutineScope,
 ) : BaseViewModel(scope), ContainerHost<SharedState, SharedEffect> {
+    init {
+        sharedPrefEditor
+            .putString(firebaseAuthRepo.getUserAfterSignIn()?.uid, USER_UNIQUE_IDENTIFICATION)
+            .apply()
+    }
+
     private val job: Job = Job()
     val authUIInstance = firebaseAuthRepo.getAuthUIInstance()
 

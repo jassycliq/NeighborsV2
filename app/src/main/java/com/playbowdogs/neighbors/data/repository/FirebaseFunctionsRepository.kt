@@ -58,4 +58,14 @@ class FirebaseFunctionsRepository {
         Timber.e(response.data.toString())
         response
     }
+
+    suspend fun getCalendar(): HttpsCallableResult? = withContext(Dispatchers.IO) {
+        functions
+            .getHttpsCallable("acuityCalendarUI")
+            .call()
+            .await()
+            .also {
+                Timber.e(it.data.toString())
+            }
+    }
 }

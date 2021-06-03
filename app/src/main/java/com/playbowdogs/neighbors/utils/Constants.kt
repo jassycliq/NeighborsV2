@@ -20,6 +20,7 @@ const val CLIENT_PACKAGE_NAME: String = "com.playbowdogs.neighbors.client"
 const val BOTTOM_NAV_INTENT: String = "action.neighbor.dashboard.open"
 const val FIREBASE_UI_NAV_INTENT: String = "action.neighbor.firebaseui.open"
 const val USER_TYPE_PREF: String = "USER_TYPE"
+const val USER_UNIQUE_IDENTIFICATION: String = "USER_UNIQUE_IDENTIFICATION"
 
 val EMPTY_RECORDED_CLIPS: ArrayList<AngelCamRecordedClips> =
     ArrayList<AngelCamRecordedClips>(5).apply {

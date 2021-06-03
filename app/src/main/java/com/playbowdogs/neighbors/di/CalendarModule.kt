@@ -1,6 +1,8 @@
 package com.playbowdogs.neighbors.di
 
+import android.content.SharedPreferences
 import com.playbowdogs.neighbors.data.repository.AcuityRepository
+import com.playbowdogs.neighbors.data.repository.FirebaseFunctionsRepository
 import com.playbowdogs.neighbors.data.repository.FirestoreRepository
 import com.playbowdogs.neighbors.viewmodel.calendar.CalendarViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +16,7 @@ val calendarModule: Module = module {
     viewModel {
         CalendarViewModel(
             get<FirestoreRepository>(),
-            get<AcuityRepository>(),
+            get<FirebaseFunctionsRepository>(),
             get<CoroutineScope>()
         )
     }

@@ -1,5 +1,6 @@
 package com.playbowdogs.neighbors.di
 
+import android.content.SharedPreferences
 import com.playbowdogs.neighbors.data.repository.AcuityRepository
 import com.playbowdogs.neighbors.data.repository.AngelCamRepository
 import com.playbowdogs.neighbors.data.repository.FirebaseAuthRepository
@@ -21,6 +22,7 @@ val sharedViewModelModule: Module = module {
             get<AcuityRepository>(),
             get<FirestoreRepository>(),
             get<FirebaseAuthRepository>(),
+            get<SharedPreferences.Editor>(),
             get<CoroutineScope>(),
         )
     }
