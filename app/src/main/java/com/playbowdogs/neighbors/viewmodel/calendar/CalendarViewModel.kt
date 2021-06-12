@@ -1,20 +1,15 @@
 package com.playbowdogs.neighbors.viewmodel.calendar
 
-import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
-import com.playbowdogs.neighbors.data.repository.AcuityRepository
 import com.playbowdogs.neighbors.data.repository.FirebaseFunctionsRepository
 import com.playbowdogs.neighbors.data.repository.FirestoreRepository
 import com.playbowdogs.neighbors.utils.BaseViewModel
-import com.playbowdogs.neighbors.utils.USER_UNIQUE_IDENTIFICATION
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.format.FormatStyle
 
 @ExperimentalCoroutinesApi
 class CalendarViewModel(

@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.*
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -14,13 +16,11 @@ import com.playbowdogs.neighbors.ui.onboard.OnBoardingFragment
 import com.playbowdogs.neighbors.ui.userType.UserTypeFragment
 import com.playbowdogs.neighbors.utils.RootViewDeferringInsetsCallback
 import com.playbowdogs.neighbors.utils.TranslateDeferringInsetsAnimationCallback
-import com.playbowdogs.neighbors.viewmodel.SharedViewModel
 import com.playbowdogs.neighbors.viewmodel.firebaseUI.NewFirebaseUIViewModel
 import com.playbowdogs.neighbors.viewmodel.onboard.OnBoardingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 private const val NUM_PAGES = 2
@@ -34,7 +34,7 @@ class OnBoardViewPager : Fragment() {
 
     private val firebaseVM: NewFirebaseUIViewModel by sharedViewModel()
     private val onBoardingViewModel: OnBoardingViewModel by sharedViewModel()
-    private val sharedViewModel: SharedViewModel by sharedViewModel()
+//    private val sharedViewModel: SharedViewModel by sharedViewModel()
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous

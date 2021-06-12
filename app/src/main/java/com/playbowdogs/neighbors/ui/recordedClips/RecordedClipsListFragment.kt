@@ -1,9 +1,7 @@
 package com.playbowdogs.neighbors.ui.recordedClips
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
@@ -11,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.playbowdogs.neighbors.R
 import com.playbowdogs.neighbors.data.adapter.RecordedClipsListAdapter
-import com.playbowdogs.neighbors.databinding.FragmentRecordedClipsListBinding
 import com.playbowdogs.neighbors.data.model.AngelCamRecordedClips
+import com.playbowdogs.neighbors.databinding.FragmentRecordedClipsListBinding
 import com.playbowdogs.neighbors.utils.BaseFragment
 import com.playbowdogs.neighbors.utils.EMPTY_RECORDED_CLIPS
 import com.playbowdogs.neighbors.utils.Status.*

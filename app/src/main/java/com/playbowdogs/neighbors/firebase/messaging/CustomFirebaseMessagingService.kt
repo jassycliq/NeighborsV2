@@ -56,26 +56,6 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
 
             // Use [FirebaseNotificationHelper] class to handle notification logic
             notificationHelper.onNotificationReceived(it)
-            // Use [FirestoreRepository] to save notifications to Firestore
-//            saveNotificationToFirestore(it, remoteMessage)
         }
     }
-
-//    private fun saveNotificationToFirestore(notification: RemoteMessage.Notification, message: RemoteMessage) {
-//        val messageItem = FirestoreMessage(
-//            receiver_display_name = message.to.orEmpty(),
-//            sender_uid = message.senderId.orEmpty(),
-//            sender_display_name = message.from.orEmpty(),
-//            timestamp = message.sentTime.toString(),
-//            title = notification.title.orEmpty(),
-//            body = notification.body.orEmpty(),
-//            image = notification.imageUrl.toString(),
-//            message_channel = notification.channelId.orEmpty(),
-//            is_read = false
-//        )
-//
-//        GlobalScope.launch {
-//            firestoreRepository.saveNotification(messageItem)
-//        }
-//    }
 }

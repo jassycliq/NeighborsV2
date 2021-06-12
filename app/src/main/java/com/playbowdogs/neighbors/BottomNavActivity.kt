@@ -25,9 +25,11 @@ import com.playbowdogs.neighbors.firebase.auth.FirebaseAuthResultContract
 import com.playbowdogs.neighbors.intent.FirebaseUIState
 import com.playbowdogs.neighbors.ui.userType.UserTypeFragment
 import com.playbowdogs.neighbors.utils.USER_TYPE_PREF
-import com.playbowdogs.neighbors.viewmodel.SharedViewModel
 import com.playbowdogs.neighbors.viewmodel.firebaseUI.NewFirebaseUIViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import nl.dionsegijn.konfetti.KonfettiView
 import org.koin.android.ext.android.inject
@@ -43,7 +45,7 @@ class BottomNavActivity : AppCompatActivity() {
 
 //    private val firebaseUIViewModel: FirebaseUIViewModel by viewModel()
     private val newFVM: NewFirebaseUIViewModel by viewModel()
-    private val sharedViewModel: SharedViewModel by viewModel()
+//    private val sharedViewModel: SharedViewModel by viewModel()
 
     private val sharedPref by inject<SharedPreferences>()
     private val sharedPrefEdit by inject<SharedPreferences.Editor>()
@@ -101,7 +103,7 @@ class BottomNavActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launchWhenCreated {
-            sharedViewModel.container.sideEffectFlow.collect { Timber.e("Starting sharedVM") }
+//            sharedViewModel.container.sideEffectFlow.collect { Timber.e("Starting sharedVM") }
         }
     }
 

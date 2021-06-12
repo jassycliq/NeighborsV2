@@ -2,10 +2,12 @@ package com.playbowdogs.neighbors.firebase.messaging
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.messaging.RemoteMessage
 import com.playbowdogs.neighbors.R
 import com.playbowdogs.neighbors.utils.*
@@ -156,12 +158,10 @@ class FirebaseNotificationHelper(val context: Context) {
 
     /* TODO: Fix DeepLink handling in [BottomNavActivity] in order to allow notifications to
         actually navigate to correct fragments */
-//    private fun createDeepLink(): PendingIntent {
-//        return NavDeepLinkBuilder(context)
-//            .setComponentName(ComponentName.createRelative("com.playbowdogs.neighbors",
-//                ".client.ui.bottomNav.BottomNavActivity"))
-//            .setGraph(R.navigation.mobile_navigation)
-//            .setDestination(R.id.navigation_camera_details)
-//            .createPendingIntent()
-//    }
+    private fun createDeepLink(): PendingIntent {
+        return NavDeepLinkBuilder(context)
+            .setGraph(R.navigation.live)
+            .setDestination(R.id.navigation_camera_details)
+            .createPendingIntent()
+    }
 }

@@ -1,7 +1,10 @@
 package com.playbowdogs.neighbors.data.repository
 
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.playbowdogs.neighbors.data.model.*
 import com.playbowdogs.neighbors.utils.getDataFlow
 import kotlinx.coroutines.*

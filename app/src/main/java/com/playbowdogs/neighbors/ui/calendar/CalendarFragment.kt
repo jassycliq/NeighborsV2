@@ -6,8 +6,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.playbowdogs.neighbors.databinding.FragmentCalendarBinding
 import com.playbowdogs.neighbors.data.decorators.EventDecorator
+import com.playbowdogs.neighbors.databinding.FragmentCalendarBinding
 import com.playbowdogs.neighbors.utils.BaseFragment
 import com.playbowdogs.neighbors.viewmodel.calendar.CalendarViewModel
 import com.prolificinteractive.materialcalendarview.CalendarDay

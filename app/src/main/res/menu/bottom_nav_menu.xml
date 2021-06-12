@@ -12,11 +12,6 @@
         android:title="@string/title_live_view" />
 
     <item
-        android:id="@+id/live_view_fragment"
-        android:icon="@drawable/ic_videocam"
-        android:title="@string/title_live_view" />
-
-    <item
         android:id="@+id/history"
         android:icon="@drawable/ic_video_library"
         android:title="@string/title_recordedClips" />

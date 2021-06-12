@@ -10,7 +10,6 @@ import androidx.preference.PreferenceFragmentCompat
 import com.playbowdogs.neighbors.R
 import com.playbowdogs.neighbors.firebase.firestore.FirestoreViewModel
 import com.playbowdogs.neighbors.utils.Actions
-import com.playbowdogs.neighbors.viewmodel.SharedViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -22,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 @ExperimentalCoroutinesApi
 class SettingsFragment : PreferenceFragmentCompat() {
     private val firestoreViewModel: FirestoreViewModel by sharedViewModel()
-    private val sharedViewModel: SharedViewModel by sharedViewModel()
+//    private val sharedViewModel: SharedViewModel by sharedViewModel()
     private val sharedPrefEdit by inject<SharedPreferences.Editor>()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -40,9 +39,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val signOutPreference: Preference? = findPreference("signOut")
 
         signOutPreference?.setOnPreferenceClickListener {
-            sharedViewModel.updateFCMToken(null)
+            firestoreViewModel.updateFCMToken(null)
             sharedPrefEdit.clear().apply()
-            sharedViewModel.authUIInstance
+            firestoreViewModel.authInstance
                 .signOut(requireContext())
                 .addOnCompleteListener {
                     startActivity(Actions.openFirebaseUiIntent(requireContext()))

@@ -6,8 +6,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.core.net.toUri
-import com.playbowdogs.neighbors.databinding.FragmentRecordedClipsVideoBinding
 import com.playbowdogs.neighbors.data.model.AngelCamRecordedClips
+import com.playbowdogs.neighbors.databinding.FragmentRecordedClipsVideoBinding
 import com.playbowdogs.neighbors.utils.BaseFragment
 import com.playbowdogs.neighbors.utils.Status.*
 import com.playbowdogs.neighbors.viewmodel.recordedClipsList.RecordedClipsListViewModel

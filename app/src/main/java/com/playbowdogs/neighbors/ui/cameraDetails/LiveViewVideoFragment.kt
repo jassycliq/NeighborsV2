@@ -4,14 +4,9 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.playbowdogs.neighbors.databinding.FragmentLiveViewBinding
 import com.playbowdogs.neighbors.databinding.FragmentLiveViewVideoBinding
 import com.playbowdogs.neighbors.utils.BaseFragment
-import com.playbowdogs.neighbors.viewmodel.SharedViewModel
 import com.playbowdogs.neighbors.viewmodel.liveView.LiveViewVideoViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -22,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 @ExperimentalCoroutinesApi
 class LiveViewVideoFragment : BaseFragment<FragmentLiveViewVideoBinding>(FragmentLiveViewVideoBinding::inflate) {
     private val viewModel: LiveViewVideoViewModel by sharedViewModel()
-    private val sharedViewModel: SharedViewModel by sharedViewModel()
+//    private val sharedViewModel: SharedViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

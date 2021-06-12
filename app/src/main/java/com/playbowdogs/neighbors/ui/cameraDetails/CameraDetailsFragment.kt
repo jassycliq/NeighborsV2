@@ -2,28 +2,20 @@ package com.playbowdogs.neighbors.ui.cameraDetails
 
 import android.media.MediaPlayer.*
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.net.toUri
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.playbowdogs.neighbors.R
 import com.playbowdogs.neighbors.databinding.FragmentLiveViewBinding
 import com.playbowdogs.neighbors.utils.BaseFragment
-import com.playbowdogs.neighbors.viewmodel.SharedViewModel
 import com.playbowdogs.neighbors.viewmodel.liveView.LiveViewVideoViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 class CameraDetailsFragment : BaseFragment<FragmentLiveViewBinding>(FragmentLiveViewBinding::inflate) {
-    private val viewModel: SharedViewModel by sharedViewModel()
     private val liveViewModel: LiveViewVideoViewModel by sharedViewModel()
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
@@ -42,7 +34,6 @@ class CameraDetailsFragment : BaseFragment<FragmentLiveViewBinding>(FragmentLive
 
     override fun onPause() {
         super.onPause()
-        viewModel.cancelJobs()
         unbindView()
     }
 
