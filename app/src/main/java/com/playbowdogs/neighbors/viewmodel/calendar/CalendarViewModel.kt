@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import org.threeten.bp.LocalDate
+import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 class CalendarViewModel(
@@ -23,7 +24,9 @@ class CalendarViewModel(
     val threeMonthsBefore: LocalDate = currentDate.minusMonths(3)
     val sixMonthsAhead: LocalDate = currentDate.plusMonths(6)
 
-    suspend fun getAppointments() = functionRepo.getCalendar()
+    suspend fun getAppointments() = functionRepo.getCalendar().addOnFailureListener {
+        Timber.e(it)
+    }
 
     val appointments = liveData(scope.coroutineContext) {
         firestoreRepo.getAppointmentsFlow()?.collect { appointmentList ->

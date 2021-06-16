@@ -1,22 +1,28 @@
 package com.playbowdogs.neighbors.ui.cameraDetails
 
+import android.content.SharedPreferences
 import android.media.MediaPlayer.*
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.playbowdogs.neighbors.R
 import com.playbowdogs.neighbors.databinding.FragmentLiveViewBinding
 import com.playbowdogs.neighbors.utils.BaseFragment
+import com.playbowdogs.neighbors.utils.USER_TYPE_PREF
 import com.playbowdogs.neighbors.viewmodel.liveView.LiveViewVideoViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 class CameraDetailsFragment : BaseFragment<FragmentLiveViewBinding>(FragmentLiveViewBinding::inflate) {
     private val liveViewModel: LiveViewVideoViewModel by sharedViewModel()
+    private val sharedPref by inject<SharedPreferences>()
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
@@ -25,10 +31,16 @@ class CameraDetailsFragment : BaseFragment<FragmentLiveViewBinding>(FragmentLive
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        lifecycleScope.launchWhenCreated {
+            liveViewModel.getLiveView()
+        }
+
         adjustBottomSheet()
         setObservers()
-        setOnClickListeners()
-
+        when (sharedPref.getString(USER_TYPE_PREF, "Customer")) {
+            "Dog Sitter" -> setOnClickListeners()
+            else -> Unit
+        }
         setLoadingUI()
     }
 
@@ -60,27 +72,21 @@ class CameraDetailsFragment : BaseFragment<FragmentLiveViewBinding>(FragmentLive
     }
 
     private fun setObservers() {
-//        viewModel.isRecording.observe(viewLifecycleOwner) { isRecording ->
-//            Timber.e("Is Recording: $isRecording")
-//            when (isRecording) {
-//                true -> {
-//                    bindVideoView()
-//                    viewModel.cameraResultForCustomer.observe(viewLifecycleOwner) { result ->
-//                        result?.let {
-//                            liveViewModel.videoURI.value = result.streams[3].url.toUri()
-//                        }
-//                    }
-//                }
-//                false -> {
-//                    unbindView()
-//                    setErrorUI()
-//                }
-//            }
-//        }
-
-//        viewModel.dogSitterUser.observe(viewLifecycleOwner) { firestoreUser ->
-//            mBinding?.fragmentDogsitterInfo?.dogSitter = firestoreUser
-//        }
+        liveViewModel.onGoingAppointment.observe(viewLifecycleOwner) { onGoingAppointment ->
+            onGoingAppointment?.let {
+                binding.fragmentDogsitterInfo.onGoingAppointment = onGoingAppointment
+            }
+            when (onGoingAppointment?.now_recording) {
+                true -> {
+                    bindVideoView()
+                    liveViewModel.videoURI.value = onGoingAppointment.stream_links?.get(3)?.url?.toUri()
+                }
+                else -> {
+                    unbindView()
+                    setErrorUI()
+                }
+            }
+        }
 
         liveViewModel.videoState.observe(viewLifecycleOwner) {
             when (it) {

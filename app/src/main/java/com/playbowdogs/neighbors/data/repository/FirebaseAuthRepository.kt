@@ -14,6 +14,7 @@ import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 class FirebaseAuthRepository {
@@ -29,7 +30,7 @@ class FirebaseAuthRepository {
             try {
                 sendBlocking(firebaseAuth)
             } catch (e: Exception) {
-
+                Timber.e(e)
             }
         }
         Firebase.auth.addAuthStateListener(firebaseAuthCallback)

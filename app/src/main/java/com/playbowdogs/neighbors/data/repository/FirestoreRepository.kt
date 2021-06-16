@@ -285,7 +285,7 @@ class FirestoreRepository : KoinComponent {
     }
 
     @ExperimentalCoroutinesApi
-    suspend fun getAppointmentsFlow(): Flow<List<AcuityAppointment?>>? {
+    fun getAppointmentsFlow(): Flow<List<AcuityAppointment?>>? {
         return user?.let {
             firestoreDB.collection("AcuityAppointments").document(it.uid).collection("Appointments").getDataFlow { querySnapshot ->
                 querySnapshot?.documents?.map { snapshot ->
@@ -298,5 +298,15 @@ class FirestoreRepository : KoinComponent {
     // Parses the document snapshot to the desired object
     private fun getAppointmentListItemFromSnapshot(documentSnapshot: DocumentSnapshot): AcuityAppointment? {
         return documentSnapshot.toObject(AcuityAppointment::class.java)
+    }
+
+    @ExperimentalCoroutinesApi
+    fun getLiveView(): Flow<OnGoingAppointment?>? {
+        return user?.let {
+            firestoreDB.collection("OngoingAppointments").document(it.uid).getDataFlow { documentSnapshot ->
+                Timber.e("ongoing appointment document flow: $documentSnapshot")
+                documentSnapshot?.toObject(OnGoingAppointment::class.java)
+            }
+        }
     }
 }

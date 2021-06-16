@@ -24,12 +24,10 @@ import com.google.firebase.ktx.Firebase
 import com.playbowdogs.neighbors.firebase.auth.FirebaseAuthResultContract
 import com.playbowdogs.neighbors.intent.FirebaseUIState
 import com.playbowdogs.neighbors.ui.userType.UserTypeFragment
+import com.playbowdogs.neighbors.utils.MyKonfetti
 import com.playbowdogs.neighbors.utils.USER_TYPE_PREF
 import com.playbowdogs.neighbors.viewmodel.firebaseUI.NewFirebaseUIViewModel
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import nl.dionsegijn.konfetti.KonfettiView
 import org.koin.android.ext.android.inject
@@ -43,9 +41,7 @@ import timber.log.Timber
 class BottomNavActivity : AppCompatActivity() {
     private var currentNavController: LiveData<NavController>? = null
 
-//    private val firebaseUIViewModel: FirebaseUIViewModel by viewModel()
     private val newFVM: NewFirebaseUIViewModel by viewModel()
-//    private val sharedViewModel: SharedViewModel by viewModel()
 
     private val sharedPref by inject<SharedPreferences>()
     private val sharedPrefEdit by inject<SharedPreferences.Editor>()
@@ -101,10 +97,6 @@ class BottomNavActivity : AppCompatActivity() {
                 Timber.e("\ncollecting state flow!\n")
                 render(it)}
         }
-
-        lifecycleScope.launchWhenCreated {
-//            sharedViewModel.container.sideEffectFlow.collect { Timber.e("Starting sharedVM") }
-        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -147,13 +139,7 @@ class BottomNavActivity : AppCompatActivity() {
      * Called on first creation and when restoring state.
      */
     private fun setupBottomNavigationBar() {
-        val navGraphIds: List<Int> = when (sharedPref.getString(USER_TYPE_PREF, "")) {
-            "Customer" -> listOf(R.navigation.calendar, R.navigation.live, R.navigation.history, R.navigation.settings)
-            "Dog Sitter" -> listOf(R.navigation.calendar, R.navigation.live, R.navigation.history, R.navigation.settings)
-            else -> listOf()
-        }
-
-//        val navGraphIds = listOf(R.navigation.calendar, R.navigation.live, R.navigation.history, R.navigation.settings)
+        val navGraphIds = listOf(R.navigation.calendar, R.navigation.live, R.navigation.history, R.navigation.settings)
 
         // Setup the bottom navigation view with a list of navigation graphs
         val controller = navView.setupWithNavController(
@@ -221,39 +207,39 @@ class BottomNavActivity : AppCompatActivity() {
             .commitNow()
     }
 
-//    private fun setObservers() {
-//        navView.setOnNavigationItemReselectedListener {
-//            when (it.title) {
-//                "Settings" -> {
-//                    lifecycleScope.launch {
-//                        Timber.e("$konfettiCounter")
-//                        job = async(Dispatchers.Main) {
-//                            val time = System.currentTimeMillis()
-//
-//                            when {
-//                                startMillis == 0L || (time - startMillis > 3000) -> {
-//                                    job?.cancel().also {
-//                                        startMillis = time
-//                                        konfettiCounter = 0
-//                                        MyKonfetti.cancel(konfetti)
-//                                    }
-//                                }
-//
-//                                konfettiCounter == 8 -> {
-//                                    startMillis = time
-//                                    konfettiCounter = 0
-//                                    MyKonfetti.display(konfetti)
-//                                }
-//
-//                                else -> konfettiCounter++
-//                            }
-//                        }
-//                    }
-//                }
-//                else -> Unit
-//            }
-//        }
-//    }
+    private fun setObservers() {
+        navView.setOnNavigationItemReselectedListener {
+            when (it.title) {
+                "Settings" -> {
+                    lifecycleScope.launch {
+                        Timber.e("$konfettiCounter")
+                        job = async(Dispatchers.Main) {
+                            val time = System.currentTimeMillis()
+
+                            when {
+                                startMillis == 0L || (time - startMillis > 3000) -> {
+                                    job?.cancel().also {
+                                        startMillis = time
+                                        konfettiCounter = 0
+                                        MyKonfetti.cancel(konfetti)
+                                    }
+                                }
+
+                                konfettiCounter == 8 -> {
+                                    startMillis = time
+                                    konfettiCounter = 0
+                                    MyKonfetti.display(konfetti)
+                                }
+
+                                else -> konfettiCounter++
+                            }
+                        }
+                    }
+                }
+                else -> Unit
+            }
+        }
+    }
 
     companion object {
         private const val RC_SIGN_IN = 123

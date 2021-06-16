@@ -1,5 +1,6 @@
 package com.playbowdogs.neighbors.data.repository
 
+import com.google.firebase.functions.FirebaseFunctionsException
 import com.google.firebase.functions.HttpsCallableResult
 import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
@@ -59,13 +60,21 @@ class FirebaseFunctionsRepository {
         response
     }
 
-    suspend fun getCalendar(): HttpsCallableResult? = withContext(Dispatchers.IO) {
+    suspend fun getCalendar() = withContext(Dispatchers.IO) {
         functions
             .getHttpsCallable("acuityCalendarUI")
             .call()
-            .await()
-            .also {
-                Timber.e(it.data.toString())
+            .continueWith { task ->
+                val result = task.result?.data
+                result
             }
+    }
+
+    suspend fun getLiveView(): HttpsCallableResult? = withContext(Dispatchers.IO) {
+        functions
+            .getHttpsCallable("acuityCurrentDayUI")
+            .call()
+            .await()
+            .also { Timber.e(it.data.toString()) }
     }
 }

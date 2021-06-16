@@ -17,7 +17,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 @ExperimentalCoroutinesApi
 class LiveViewVideoFragment : BaseFragment<FragmentLiveViewVideoBinding>(FragmentLiveViewVideoBinding::inflate) {
     private val viewModel: LiveViewVideoViewModel by sharedViewModel()
-//    private val sharedViewModel: SharedViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

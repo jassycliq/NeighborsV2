@@ -8,8 +8,8 @@
     <data>
 
         <variable
-                name="dogSitter"
-                type="com.playbowdogs.neighbors.data.model.FirestoreUser" />
+                name="onGoingAppointment"
+                type="com.playbowdogs.neighbors.data.model.OnGoingAppointment" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -101,7 +101,7 @@
                     android:layout_height="128dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    app:CamImage="@{dogSitter.profile_photo}"
+                    app:CamImage="@{onGoingAppointment.user_profile_photo}"
                     app:layout_constraintEnd_toStartOf="@+id/dogSitter_info_full_name"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +132,7 @@
                         android:editable="false"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
-                        android:text="@{dogSitter.display_name}"
+                        android:text="@{onGoingAppointment.user}"
                         android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textColor="@color/onSurface"
@@ -170,7 +170,7 @@
                         android:inputType="numberPassword"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textColor="@color/onSurface"
-                        app:formatPhone="@{dogSitter.phone_number}"
+                        app:formatPhone="@{onGoingAppointment.user_phone_number}"
                         tools:text="1234567890" />
             </com.google.android.material.textfield.TextInputLayout>
 
