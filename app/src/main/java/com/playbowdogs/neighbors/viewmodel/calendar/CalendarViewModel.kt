@@ -9,6 +9,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import timber.log.Timber
 
@@ -24,8 +25,10 @@ class CalendarViewModel(
     val threeMonthsBefore: LocalDate = currentDate.minusMonths(3)
     val sixMonthsAhead: LocalDate = currentDate.plusMonths(6)
 
-    suspend fun getAppointments() = functionRepo.getCalendar().addOnFailureListener {
-        Timber.e(it)
+    fun getAppointments() = scope.launch {
+        functionRepo.getCalendar().addOnFailureListener {
+            Timber.e(it)
+        }
     }
 
     val appointments = liveData(scope.coroutineContext) {

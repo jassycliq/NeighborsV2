@@ -18,7 +18,7 @@ data class OnGoingAppointment(
     @Json(name = "now_recording")
     var now_recording: Boolean? = false,
     @Json(name = "stream_links")
-    var stream_links: List<StreamLink>? = null,
+    var streams: List<Stream>? = null,
     @Json(name = "angelcam_id")
     var angelcam_id: String? = "",
     @Json(name = "angelcam_token")

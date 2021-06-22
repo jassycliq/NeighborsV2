@@ -70,11 +70,13 @@ class FirebaseFunctionsRepository {
             }
     }
 
-    suspend fun getLiveView(): HttpsCallableResult? = withContext(Dispatchers.IO) {
+    suspend fun getLiveView() = withContext(Dispatchers.IO) {
         functions
             .getHttpsCallable("acuityCurrentDayUI")
             .call()
-            .await()
-            .also { Timber.e(it.data.toString()) }
+            .continueWith { task ->
+                val result = task.result?.data
+                result
+            }
     }
 }

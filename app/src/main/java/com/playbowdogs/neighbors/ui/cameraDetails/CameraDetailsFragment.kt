@@ -31,14 +31,15 @@ class CameraDetailsFragment : BaseFragment<FragmentLiveViewBinding>(FragmentLive
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launchWhenCreated {
-            liveViewModel.getLiveView()
-        }
+        liveViewModel.getLiveView()
 
         adjustBottomSheet()
         setObservers()
         when (sharedPref.getString(USER_TYPE_PREF, "Customer")) {
-            "Dog Sitter" -> setOnClickListeners()
+            "Dog Sitter" -> {
+                setOnClickListeners()
+                binding.fragmentCameraDetails.recordingButtons.root.visibility = View.VISIBLE
+            }
             else -> Unit
         }
         setLoadingUI()
@@ -79,7 +80,7 @@ class CameraDetailsFragment : BaseFragment<FragmentLiveViewBinding>(FragmentLive
             when (onGoingAppointment?.now_recording) {
                 true -> {
                     bindVideoView()
-                    liveViewModel.videoURI.value = onGoingAppointment.stream_links?.get(3)?.url?.toUri()
+                    liveViewModel.videoURI.value = onGoingAppointment.streams?.get(3)?.url?.toUri()
                 }
                 else -> {
                     unbindView()

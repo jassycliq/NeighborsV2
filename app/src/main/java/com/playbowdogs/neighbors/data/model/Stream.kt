@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 
 @Keep
 @JsonClass(generateAdapter = true)
-data class StreamLink(
+data class Stream(
     @Json(name = "format")
     var format: String? = "",
     @Json(name = "url")

@@ -32,7 +32,9 @@ class LiveViewVideoViewModel(
     }
 
     fun getLiveView() = scope.launch {
-        firebaseFunctionsRepo.getLiveView()
+        firebaseFunctionsRepo.getLiveView().addOnFailureListener {
+            Timber.e(it)
+        }
     }
 
     val onGoingAppointment = liveData(scope.coroutineContext) {

@@ -35,9 +35,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(FragmentCalendarB
         super.onViewCreated(view, savedInstanceState)
         AndroidThreeTen.init(activity)
 
-        lifecycleScope.launchWhenCreated {
-            viewModel.getAppointments()
-        }
+        viewModel.getAppointments()
 
         setInsetPadding(view)
         setCalendarTheme()
