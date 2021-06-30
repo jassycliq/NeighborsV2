@@ -13,7 +13,7 @@ import timber.log.Timber
 @FlowPreview
 @InternalCoroutinesApi
 @ExperimentalCoroutinesApi
-class FirestoreViewModel(
+class SettingsViewModel(
     scope: CoroutineScope,
     private val repo: FirestoreRepository,
     private val auth: FirebaseAuthRepository,

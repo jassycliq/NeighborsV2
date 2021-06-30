@@ -1,9 +1,19 @@
 package com.playbowdogs.neighbors.data.adapter
 
+import android.media.AudioManager
+import android.os.Build
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.VideoView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textview.MaterialTextView
+import com.playbowdogs.neighbors.R
+import com.playbowdogs.neighbors.data.model.OnGoingAppointment
 import com.playbowdogs.neighbors.utils.GlideApp
+import timber.log.Timber
 
 object BindingAdapter {
     @JvmStatic
@@ -22,6 +32,47 @@ object BindingAdapter {
 //            .placeholder(com.playbowdogs.neighbors.android.R.drawable.ic_user)
             .dontAnimate()
             .into(imageView)
+    }
+
+    @JvmStatic
+    @BindingAdapter("userProfile")
+    fun loadUserProfile(imageView: ImageView, onGoingAppointment: OnGoingAppointment) {
+        if (onGoingAppointment.user == null) {
+            imageView.visibility = View.GONE
+        } else {
+            imageView.visibility = View.VISIBLE
+            GlideApp.with(imageView.context)
+                .load(onGoingAppointment.user_profile_photo)
+                .placeholder(R.drawable.ic_user)
+                .dontAnimate()
+                .into(imageView)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("videoUrl")
+    fun loadVideo(videoView: VideoView, videoUrl: String?) {
+        videoUrl?.let { url ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                videoView.setAudioFocusRequest(
+                    AudioManager.AUDIOFOCUS_NONE)
+            }
+            videoView.setOnPreparedListener {
+                it.setVolume(0f, 0f)
+                it.start()
+            }
+            videoView.setVideoURI(url.toUri())
+        }
+    }
+    
+    @JvmStatic
+    @BindingAdapter("appointmentHeader")
+    fun loadText(materialTextView: MaterialTextView, user: String?) {
+        if (user == null) {
+            materialTextView.text = materialTextView.context.getString(R.string.appointment_header_none)
+        } else {
+            materialTextView.text = materialTextView.context.getString(R.string.appointment_header)
+        }
     }
 
     @JvmStatic

@@ -11,11 +11,9 @@ import org.koin.dsl.module
 
 @ExperimentalCoroutinesApi
 val calendarModule: Module = module {
-    viewModel {
-        CalendarViewModel(
-            get<FirestoreRepository>(),
-            get<FirebaseFunctionsRepository>(),
-            get<CoroutineScope>()
-        )
-    }
+    viewModel { CalendarViewModel(
+        get<FirestoreRepository>(),
+        get<FirebaseFunctionsRepository>(),
+        get<CoroutineScope>()
+    ) }
 }

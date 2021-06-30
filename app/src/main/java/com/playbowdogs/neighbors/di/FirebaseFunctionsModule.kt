@@ -6,6 +6,4 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 @ExperimentalCoroutinesApi
-val firebaseFunctionsModule: Module = module {
-    factory { FirebaseFunctionsRepository() }
-}
+val firebaseFunctionsModule: Module = module { factory { FirebaseFunctionsRepository() } }

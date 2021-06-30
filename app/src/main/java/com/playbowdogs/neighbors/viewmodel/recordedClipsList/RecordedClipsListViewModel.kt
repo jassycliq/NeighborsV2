@@ -8,7 +8,6 @@ import com.playbowdogs.neighbors.data.repository.AngelCamRepository
 import com.playbowdogs.neighbors.data.repository.FirebaseFunctionsRepository
 import com.playbowdogs.neighbors.data.repository.FirestoreRepository
 import com.playbowdogs.neighbors.utils.BaseViewModel
-import com.playbowdogs.neighbors.utils.EMPTY_RECORDED_CLIPS
 import com.playbowdogs.neighbors.utils.Resource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
@@ -87,7 +86,7 @@ class RecordedClipsListViewModel(
                 when (it.isNullOrEmpty()) {
                     true -> {
                         Timber.e("Recorded Clip is empty!")
-                        emit(EMPTY_RECORDED_CLIPS)
+                        emit(arrayListOf<AngelCamRecordedClips>())
                     }
                     false -> {
                         val newList = ArrayList<AngelCamRecordedClips>()
@@ -124,7 +123,7 @@ class RecordedClipsListViewModel(
             }
         } catch (exception: Exception) {
             Timber.e(exception)
-            emit(EMPTY_RECORDED_CLIPS)
+            emit(arrayListOf<AngelCamRecordedClips>())
         }
     }
 

@@ -21,7 +21,6 @@ import com.playbowdogs.neighbors.utils.BaseFragment
 import com.playbowdogs.neighbors.utils.MyItemKeyProvider
 import com.playbowdogs.neighbors.utils.SpanningLinearLayoutManager
 import com.playbowdogs.neighbors.utils.USER_TYPE_PREF
-import com.playbowdogs.neighbors.viewmodel.firebaseUI.NewFirebaseUIViewModel
 import com.playbowdogs.neighbors.viewmodel.onboard.OnBoardingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -34,9 +33,7 @@ import org.koin.core.component.KoinComponent
 @InternalCoroutinesApi
 @FlowPreview
 class UserTypeFragment : BaseFragment<FragmentOnBoardingUserTypeBinding>(FragmentOnBoardingUserTypeBinding::inflate), KoinComponent {
-    private val firebaseUIViewModel: NewFirebaseUIViewModel by sharedViewModel()
     private val onBoardingViewModel: OnBoardingViewModel by sharedViewModel()
-    private val sharedPref by inject<SharedPreferences>()
     private val sharedPrefEdit by inject<SharedPreferences.Editor>()
 
     private lateinit var adapter: GenericAdapter<Any>
@@ -112,8 +109,8 @@ class UserTypeFragment : BaseFragment<FragmentOnBoardingUserTypeBinding>(Fragmen
                         // TODO: Eventually replace hardcoded city with dynamic city
                         lastSelection = it.selection.first()
                         val userType = list[it.selection.first().toInt()]
-                        firebaseUIViewModel.saveUserType(userType)
-                        firebaseUIViewModel.setNextButton(true)
+                        onBoardingViewModel.saveUserType(userType)
+                        onBoardingViewModel.setNextButton(true)
                         sharedPrefEdit.putString(USER_TYPE_PREF, userType.type)
                             .apply()
                     }

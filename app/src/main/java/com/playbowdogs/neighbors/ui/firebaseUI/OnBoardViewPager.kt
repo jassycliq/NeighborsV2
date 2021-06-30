@@ -16,7 +16,6 @@ import com.playbowdogs.neighbors.ui.onboard.OnBoardingFragment
 import com.playbowdogs.neighbors.ui.userType.UserTypeFragment
 import com.playbowdogs.neighbors.utils.RootViewDeferringInsetsCallback
 import com.playbowdogs.neighbors.utils.TranslateDeferringInsetsAnimationCallback
-import com.playbowdogs.neighbors.viewmodel.firebaseUI.NewFirebaseUIViewModel
 import com.playbowdogs.neighbors.viewmodel.onboard.OnBoardingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -32,9 +31,7 @@ class OnBoardViewPager : Fragment() {
     private var _binding: FragmentOnBoardingPagerBinding? = null
     private val binding: FragmentOnBoardingPagerBinding get() = _binding!!
 
-    private val firebaseVM: NewFirebaseUIViewModel by sharedViewModel()
     private val onBoardingViewModel: OnBoardingViewModel by sharedViewModel()
-//    private val sharedViewModel: SharedViewModel by sharedViewModel()
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -87,12 +84,12 @@ class OnBoardViewPager : Fragment() {
                     0 -> {
                         binding.buttonCancel.text = "Cancel"
                         binding.buttonNext.text = "Next"
-                        binding.buttonNext.isEnabled = firebaseVM.nextButton.value ?: false
+                        binding.buttonNext.isEnabled = onBoardingViewModel.nextButton.value ?: false
                     }
                     1 -> {
                         binding.buttonCancel.text = "Back"
                         binding.buttonNext.text = "Submit"
-                        binding.buttonNext.isEnabled = firebaseVM.submitButton.value ?: false
+                        binding.buttonNext.isEnabled = onBoardingViewModel.submitButton.value ?: false
                     }
                 }
             }
@@ -100,7 +97,7 @@ class OnBoardViewPager : Fragment() {
 
         binding.buttonCancel.setOnClickListener {
             when (viewPager.currentItem) {
-                0 -> firebaseVM.signOut(context)
+                0 -> onBoardingViewModel.signOut(context)
                 1 -> viewPager.currentItem -= 1
             }
         }
@@ -112,11 +109,11 @@ class OnBoardViewPager : Fragment() {
             }
         }
 
-        firebaseVM.nextButton.observe(viewLifecycleOwner) {
+        onBoardingViewModel.nextButton.observe(viewLifecycleOwner) {
             binding.buttonNext.isEnabled = it ?: false
         }
 
-        firebaseVM.submitButton.observe(viewLifecycleOwner) {
+        onBoardingViewModel.submitButton.observe(viewLifecycleOwner) {
             binding.buttonNext.isEnabled = it ?: false
         }
     }

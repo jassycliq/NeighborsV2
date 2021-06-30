@@ -29,6 +29,7 @@ import timber.log.Timber
 class OnBoardingFragment : BaseFragment<FragmentOnBoardingBinding>(FragmentOnBoardingBinding::inflate) {
     private val viewModel: OnBoardingViewModel by sharedViewModel()
     private val firebaseUIViewModel: NewFirebaseUIViewModel by sharedViewModel()
+    private val onBoardingViewModel: OnBoardingViewModel by sharedViewModel()
 
     private var lastChar = " "
 
@@ -98,7 +99,7 @@ class OnBoardingFragment : BaseFragment<FragmentOnBoardingBinding>(FragmentOnBoa
 
         viewModel.formChecker.observe(viewLifecycleOwner) {
             Timber.e(it.toString())
-            firebaseUIViewModel.setSubmitButton(it)
+            onBoardingViewModel.setSubmitButton(it)
         }
 
         viewModel.client.observe(viewLifecycleOwner) {

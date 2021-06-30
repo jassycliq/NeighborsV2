@@ -1,14 +1,18 @@
 package com.playbowdogs.neighbors.viewmodel.onboard
 
+import android.content.Context
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.playbowdogs.neighbors.data.model.AcuityClient
+import com.playbowdogs.neighbors.data.model.FirestoreUserType
+import com.playbowdogs.neighbors.data.model.UserType
 import com.playbowdogs.neighbors.data.repository.AcuityRepository
 import com.playbowdogs.neighbors.data.repository.FirebaseAuthRepository
 import com.playbowdogs.neighbors.data.repository.FirestoreRepository
@@ -30,6 +34,33 @@ class OnBoardingViewModel(
     private val firestoreRepo: FirestoreRepository,
     scope: CoroutineScope,
 ) : BaseViewModel(scope) {
+
+    val nextButton by lazy { MutableLiveData<Boolean?>(false) }
+    val submitButton by lazy { MutableLiveData<Boolean?>(false) }
+
+    fun setSubmitButton(isEnabled: Boolean?) {
+        submitButton.value = isEnabled
+    }
+
+    fun setNextButton(isEnabled: Boolean?) {
+        nextButton.value = isEnabled
+    }
+
+    fun signOut(context: Context?) = context?.let { AuthUI.getInstance().signOut(it) }
+
+    fun saveUserType(
+        userType: UserType,
+    ) = scope.launch {
+
+        val uid = firebaseAuthRepo.getUserAfterSignIn()?.uid
+        val type = FirestoreUserType(uid, userType.type, "San Francisco")
+
+        try {
+            firestoreRepo.saveUserType(uid, type)
+        } catch (exception: Exception) {
+            Timber.e(exception)
+        }
+    }
 
     val currentUser = MutableLiveData<FirebaseUser?>()
 

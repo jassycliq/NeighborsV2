@@ -304,7 +304,6 @@ class FirestoreRepository : KoinComponent {
     fun getLiveView(): Flow<OnGoingAppointment?>? {
         return user?.let {
             firestoreDB.collection("OngoingAppointments").document(it.uid).getDataFlow { documentSnapshot ->
-                Timber.e("ongoing appointment document flow: $documentSnapshot")
                 documentSnapshot?.toObject(OnGoingAppointment::class.java)
             }
         }

@@ -9,13 +9,9 @@ import org.koin.dsl.module
 
 val sharedPrefModule: Module = module {
 
-    single {
-        getSharedPrefs(androidApplication())
-    }
+    single { getSharedPrefs(androidApplication()) }
 
-    single<SharedPreferences.Editor> {
-        getSharedPrefs(androidApplication()).edit()
-    }
+    single<SharedPreferences.Editor> { getSharedPrefs(androidApplication()).edit() }
 }
 
 fun getSharedPrefs(androidApplication: Application): SharedPreferences {

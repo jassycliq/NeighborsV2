@@ -1,12 +1,7 @@
 package com.playbowdogs.neighbors.viewmodel.firebaseUI
 
-import android.content.Context
 import android.content.SharedPreferences
-import androidx.lifecycle.MutableLiveData
-import com.firebase.ui.auth.AuthUI
 import com.playbowdogs.neighbors.data.model.FirestoreUser
-import com.playbowdogs.neighbors.data.model.FirestoreUserType
-import com.playbowdogs.neighbors.data.model.UserType
 import com.playbowdogs.neighbors.data.repository.FirebaseAuthRepository
 import com.playbowdogs.neighbors.data.repository.FirestoreRepository
 import com.playbowdogs.neighbors.intent.FirebaseUIState
@@ -14,6 +9,7 @@ import com.playbowdogs.neighbors.utils.BaseViewModel
 import com.playbowdogs.neighbors.utils.USER_TYPE_PREF
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -23,6 +19,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import timber.log.Timber
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 class NewFirebaseUIViewModel(
     private val firestoreRepo: FirestoreRepository,
@@ -30,9 +27,6 @@ class NewFirebaseUIViewModel(
     private val sharedPrefEditor: SharedPreferences.Editor,
     scope: CoroutineScope,
 ) : BaseViewModel(scope), ContainerHost<FirebaseUIState, Nothing> {
-
-    val nextButton by lazy { MutableLiveData<Boolean?>(false) }
-    val submitButton by lazy { MutableLiveData<Boolean?>(false) }
 
     override val container = container<FirebaseUIState, Nothing>(FirebaseUIState()) {
         scope.launch {
@@ -81,34 +75,6 @@ class NewFirebaseUIViewModel(
 
     fun navigateTo(location: String) = intent {
         reduce { state.copy(goTo = location) }
-    }
-
-    fun setSubmitButton(isEnabled: Boolean?) {
-        submitButton.value = isEnabled
-    }
-
-    fun setNextButton(isEnabled: Boolean?) {
-        nextButton.value = isEnabled
-    }
-
-    fun setButtons() {
-
-    }
-
-    fun signOut(context: Context?) = context?.let { AuthUI.getInstance().signOut(it) }
-
-    fun saveUserType(
-        userType: UserType,
-    ) = scope.launch {
-
-        val uid = firebaseAuthRepo.getUserAfterSignIn()?.uid
-        val type = FirestoreUserType(uid, userType.type, "San Francisco")
-
-        try {
-            firestoreRepo.saveUserType(uid, type)
-        } catch (exception: Exception) {
-            Timber.e(exception)
-        }
     }
 
     fun updateFCMToken(token: String?) = scope.launch {

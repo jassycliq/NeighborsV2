@@ -20,11 +20,13 @@ const val CLIENT_PACKAGE_NAME: String = "com.playbowdogs.neighbors.client"
 const val BOTTOM_NAV_INTENT: String = "action.neighbor.dashboard.open"
 const val FIREBASE_UI_NAV_INTENT: String = "action.neighbor.firebaseui.open"
 const val USER_TYPE_PREF: String = "USER_TYPE"
+const val USER_TYPE_CUSTOMER: String = "Customer"
+const val USER_TYPE_DOG_SITTER: String = "Dog Sitter"
 const val USER_UNIQUE_IDENTIFICATION: String = "USER_UNIQUE_IDENTIFICATION"
 
 val EMPTY_RECORDED_CLIPS: ArrayList<AngelCamRecordedClips> =
-    ArrayList<AngelCamRecordedClips>(5).apply {
+    ArrayList<AngelCamRecordedClips>(1).apply {
         val item =
-            AngelCamRecordedClips("", "", "", "", "", "", "", null, "", "", "", "")
-        this.addAll(listOf(item, item, item, item, item))
+            AngelCamRecordedClips("", "No recorded clips found.", "", "", "", "", "", null, "", "", "", "")
+        this.add(item)
     }

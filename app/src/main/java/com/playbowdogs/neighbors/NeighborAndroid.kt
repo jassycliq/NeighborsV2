@@ -32,20 +32,19 @@ class NeighborAndroid : SplitCompatApplication() {
             androidContext(this@NeighborAndroid)
             modules(
                 listOf(
-                    acuityModule,
-                    angelCamModule,
                     appModule,
-                    calendarModule,
-                    firebaseFunctionsModule,
-                    onBoardingModule,
-                    liveViewModule,
-                    recordedClipsListModule,
                     coroutineScopeModule,
-                    firebaseAuthModule,
-                    firestoreModule,
                     sharedPrefModule,
                     networkModule,
-                )
+                    angelCamModule,
+//                    playbowModule,
+                    firebaseAuthModule,
+                    firestoreModule,
+                    firebaseFunctionsModule,
+                    firebaseUIViewModelModule,
+                    acuityModule,
+                    onBoardingModule,
+                    )
             )
         }
         registerActivityLifecycleCallbacks(defaultCurrentActivityListener)

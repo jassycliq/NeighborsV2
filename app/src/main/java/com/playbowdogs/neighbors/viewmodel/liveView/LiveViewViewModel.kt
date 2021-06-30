@@ -15,7 +15,7 @@ import timber.log.Timber
 
 
 @ExperimentalCoroutinesApi
-class LiveViewVideoViewModel(
+class LiveViewViewModel(
     private val firebaseFunctionsRepo: FirebaseFunctionsRepository,
     private val firestoreRepo: FirestoreRepository,
     scope: CoroutineScope,
@@ -34,12 +34,18 @@ class LiveViewVideoViewModel(
     fun getLiveView() = scope.launch {
         firebaseFunctionsRepo.getLiveView().addOnFailureListener {
             Timber.e(it)
-        }
+        }.await()
     }
 
     val onGoingAppointment = liveData(scope.coroutineContext) {
         firestoreRepo.getLiveView()?.collect {
             emit(it)
         }
+    }
+
+    fun updateAppointment(nowRecording: Boolean) = scope.launch {
+        firebaseFunctionsRepo.updateOnGoingAppointment(nowRecording).addOnFailureListener {
+            Timber.e(it)
+        }.await()
     }
 }

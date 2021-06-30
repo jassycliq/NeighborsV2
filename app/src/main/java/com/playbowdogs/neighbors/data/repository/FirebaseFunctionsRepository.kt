@@ -79,4 +79,21 @@ class FirebaseFunctionsRepository {
                 result
             }
     }
+    suspend fun updateOnGoingAppointment(
+        nowRecording: Boolean
+    ) = withContext(Dispatchers.IO) {
+        // Create the arguments to the callable function.
+        val data = hashMapOf(
+            "now_recording" to nowRecording,
+        )
+
+        functions
+            .getHttpsCallable("updateOnGoingAppointment")
+            .call(data)
+            .continueWith { task ->
+                val result = task.result?.data
+                result
+            }
+    }
+
 }

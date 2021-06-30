@@ -25,27 +25,37 @@ class RecordedClipsListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(result: AngelCamRecordedClips) {
-            when {
-                result.name.isEmpty() -> Unit
-                result.end.isEmpty() -> Unit
-                result.start.isEmpty() -> Unit
-                result.id.isEmpty() -> Unit
-                result.created_at.isEmpty() -> Unit
-                result.download_url.isNullOrEmpty() -> Unit
-                result.thumbnail_url.isNullOrEmpty() -> Unit
-                else -> {
-                    binding.name.text = result.name
-                    binding.start.text = viewModel.getTimeDiff(result)
-                    binding.createdOn.text = viewModel.humanReadableDate(result.created_at)
-                    binding.path = "${itemView.context.cacheDir}${result.id}.jpg"
-                    binding.resultUrl = result.thumbnail_url
+            binding.name.text = result.name
+            binding.start.text = viewModel.getTimeDiff(result)
+            binding.createdOn.text = viewModel.humanReadableDate(result.created_at)
+            binding.path = "${itemView.context.cacheDir}${result.id}.jpg"
+            binding.resultUrl = result.thumbnail_url
 
-                    itemView.setOnClickListener {
-                        Timber.e("Clicked on recorded clip ${result.download_url}")
-                        viewModel.chosenCamera.value = Resource.loading(data = result)
-                    }
-                }
+            itemView.setOnClickListener {
+                Timber.e("Clicked on recorded clip ${result.download_url}")
+                viewModel.chosenCamera.value = Resource.loading(data = result)
             }
+//            when {
+//                result.name.isEmpty() -> Unit
+//                result.end.isEmpty() -> Unit
+//                result.start.isEmpty() -> Unit
+//                result.id.isEmpty() -> Unit
+//                result.created_at.isEmpty() -> Unit
+//                result.download_url.isNullOrEmpty() -> Unit
+//                result.thumbnail_url.isNullOrEmpty() -> Unit
+//                else -> {
+//                    binding.name.text = result.name
+//                    binding.start.text = viewModel.getTimeDiff(result)
+//                    binding.createdOn.text = viewModel.humanReadableDate(result.created_at)
+//                    binding.path = "${itemView.context.cacheDir}${result.id}.jpg"
+//                    binding.resultUrl = result.thumbnail_url
+//
+//                    itemView.setOnClickListener {
+//                        Timber.e("Clicked on recorded clip ${result.download_url}")
+//                        viewModel.chosenCamera.value = Resource.loading(data = result)
+//                    }
+//                }
+//            }
         }
     }
 

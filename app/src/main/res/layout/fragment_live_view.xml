@@ -1,27 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
+        <variable
+            name="onGoingAppointment"
+            type="com.playbowdogs.neighbors.data.model.OnGoingAppointment" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:fitsSystemWindows="true">
+
+        <VideoView
+            android:id="@+id/fragment_live_view_video"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            android:fitsSystemWindows="true"
+            android:background="@color/black"
+            app:videoUrl="@{onGoingAppointment.stream_links.get(3).url}"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_min="120dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:name="com.playbowdogs.neighbors.ui.cameraDetails.LiveViewVideoFragment"
+            tools:layout="@layout/fragment_live_view_video" />
 
         <include
-            android:id="@+id/fragment_camera_details"
-            layout="@layout/fragment_camera_details"
+            android:id="@+id/recording_buttons"
+            layout="@layout/recording_buttons"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_live_view_video"
+            tools:visibility="visible" />
 
-        <include
-            android:id="@+id/fragment_dogsitter_info"
-            layout="@layout/fragment_dogsitter_info"
-            tools:visibility="invisible" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_dogSitter_info"
+            style="@style/CustomCardViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:cardBackgroundColor="@color/colorSurface"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recording_buttons"
+            app:layout_constraintVertical_bias="1.0"
+            >
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dogSitter_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/dogSitter_info_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:textColor="@color/onSurface"
+                    android:textSize="30sp"
+                    app:appointmentHeader="@{onGoingAppointment.user}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/dogSitter_info_profile_picture"
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toStartOf="@+id/dogSitter_info_full_name"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dogSitter_info_title"
+                    app:userProfile="@{onGoingAppointment}"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dogSitter_info_full_name"
+                    style="@style/OnBoardingTextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="false"
+                    android:hint="Full Name"
+                    android:textColorHint="@color/onSurface"
+                    android:visibility="@{onGoingAppointment.user.length() > 0 ? View.VISIBLE : View.GONE}"
+                    app:boxStrokeWidth="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/dogSitter_info_profile_picture"
+                    app:layout_constraintTop_toBottomOf="@id/dogSitter_info_title">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:text="@{onGoingAppointment.user}"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/onSurface"
+                        tools:text="Test McTest" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dogSitter_info_phone_number"
+                    style="@style/OnBoardingTextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="false"
+                    android:hint="Phone Number"
+                    android:textColorHint="@color/onSurface"
+                    android:visibility="@{onGoingAppointment.user_phone_number.length() > 0 ? View.VISIBLE : View.GONE}"
+                    app:boxStrokeWidth="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/dogSitter_info_profile_picture"
+                    app:layout_constraintTop_toBottomOf="@id/dogSitter_info_full_name"
+                    app:passwordToggleContentDescription="Show phone number"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/material_on_surface_disabled">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dogSitter_info_phone_number_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="phone"
+                        android:clickable="false"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:foregroundGravity="center"
+                        android:inputType="numberPassword"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/onSurface"
+                        app:formatPhone="@{onGoingAppointment.user_phone_number}"
+                        tools:text="1234567890" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dogSitter_info_address"
+                    style="@style/OnBoardingTextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="false"
+                    android:hint="Address"
+                    android:textColorHint="@color/onSurface"
+                    app:boxStrokeWidth="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dogSitter_info_profile_picture" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -48,5 +48,8 @@
     <string name="live_video_channel_name">Live videos</string>
     <string name="live_channel_description">Notifications sent by dog sitter to client about current Live view</string>
     <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="title_onboarding">OnBoarding</string>
+    <string name="appointment_header_none">No appointments today</string>
+    <string name="appointment_header">Today\'s Appointment</string>
 
 </resources>

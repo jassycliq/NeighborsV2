@@ -11,6 +11,8 @@ data class OnGoingAppointment(
     var user_id: String? = "",
     @Json(name = "user")
     var user: String? = "",
+    @Json(name = "user_type")
+    var user_type: String? = "",
     @Json(name = "user_phone_number")
     var user_phone_number: String? = "",
     @Json(name = "user_profile_photo")
@@ -18,7 +20,7 @@ data class OnGoingAppointment(
     @Json(name = "now_recording")
     var now_recording: Boolean? = false,
     @Json(name = "stream_links")
-    var streams: List<Stream>? = null,
+    var stream_links: List<Stream>? = null,
     @Json(name = "angelcam_id")
     var angelcam_id: String? = "",
     @Json(name = "angelcam_token")

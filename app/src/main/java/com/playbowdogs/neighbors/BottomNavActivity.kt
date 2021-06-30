@@ -21,19 +21,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.play.core.splitcompat.SplitCompat
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.playbowdogs.neighbors.di.calendarModule
+import com.playbowdogs.neighbors.di.liveViewModule
+import com.playbowdogs.neighbors.di.recordedClipsListModule
+import com.playbowdogs.neighbors.di.settingsModule
 import com.playbowdogs.neighbors.firebase.auth.FirebaseAuthResultContract
 import com.playbowdogs.neighbors.intent.FirebaseUIState
 import com.playbowdogs.neighbors.ui.userType.UserTypeFragment
-import com.playbowdogs.neighbors.utils.MyKonfetti
-import com.playbowdogs.neighbors.utils.USER_TYPE_PREF
 import com.playbowdogs.neighbors.viewmodel.firebaseUI.NewFirebaseUIViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import nl.dionsegijn.konfetti.KonfettiView
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.loadKoinModules
 import timber.log.Timber
-
 
 @FlowPreview
 @InternalCoroutinesApi
@@ -48,7 +49,7 @@ class BottomNavActivity : AppCompatActivity() {
 
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navView: BottomNavigationView
-    private lateinit var konfetti: KonfettiView
+//    private lateinit var konfetti: KonfettiView
     private lateinit var fragmentContainer: FragmentContainerView
 
     private var job: Deferred<Unit>? = null
@@ -59,7 +60,7 @@ class BottomNavActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bottom_nav)
 
-        konfetti = findViewById(R.id.viewKonfetti)
+//        konfetti = findViewById(R.id.viewKonfetti)
         navView = findViewById<BottomNavigationView?>(R.id.nav_view)
         navHostFragment = NavHostFragment.create(R.navigation.main_app)
         fragmentContainer = findViewById<FragmentContainerView>(R.id.nav_host_fragment)
@@ -81,11 +82,6 @@ class BottomNavActivity : AppCompatActivity() {
             if (consumed) insets.consumeSystemWindowInsets() else insets
         }
 
-        if (savedInstanceState == null) {
-            Timber.e("SavedInstance equals null")
-            setupBottomNavigationBar()
-        } // Else, need to wait for onRestoreInstanceState
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.setDecorFitsSystemWindows(false)
         } else {
@@ -104,7 +100,7 @@ class BottomNavActivity : AppCompatActivity() {
         // Now that BottomNavigationBar has restored its instance state
         // and its selectedItemId, we can proceed with setting up the
         // BottomNavigationBar with Navigation
-        when (newFVM.container.currentState.goTo.equals("BottomNav")) {
+        when (newFVM.container.stateFlow.value.goTo.equals("BottomNav")) {
             true -> setupBottomNavigationBar()
             else -> Unit
         }
@@ -139,6 +135,12 @@ class BottomNavActivity : AppCompatActivity() {
      * Called on first creation and when restoring state.
      */
     private fun setupBottomNavigationBar() {
+        loadKoinModules(listOf(
+            calendarModule,
+            liveViewModule,
+            recordedClipsListModule,
+            settingsModule,
+        ))
         val navGraphIds = listOf(R.navigation.calendar, R.navigation.live, R.navigation.history, R.navigation.settings)
 
         // Setup the bottom navigation view with a list of navigation graphs
@@ -205,40 +207,6 @@ class BottomNavActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .detach(navHostFragment)
             .commitNow()
-    }
-
-    private fun setObservers() {
-        navView.setOnNavigationItemReselectedListener {
-            when (it.title) {
-                "Settings" -> {
-                    lifecycleScope.launch {
-                        Timber.e("$konfettiCounter")
-                        job = async(Dispatchers.Main) {
-                            val time = System.currentTimeMillis()
-
-                            when {
-                                startMillis == 0L || (time - startMillis > 3000) -> {
-                                    job?.cancel().also {
-                                        startMillis = time
-                                        konfettiCounter = 0
-                                        MyKonfetti.cancel(konfetti)
-                                    }
-                                }
-
-                                konfettiCounter == 8 -> {
-                                    startMillis = time
-                                    konfettiCounter = 0
-                                    MyKonfetti.display(konfetti)
-                                }
-
-                                else -> konfettiCounter++
-                            }
-                        }
-                    }
-                }
-                else -> Unit
-            }
-        }
     }
 
     companion object {

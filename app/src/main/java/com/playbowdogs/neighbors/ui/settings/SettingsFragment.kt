@@ -7,20 +7,27 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.firebase.ui.auth.AuthUI
 import com.playbowdogs.neighbors.R
-import com.playbowdogs.neighbors.firebase.firestore.FirestoreViewModel
+import com.playbowdogs.neighbors.di.calendarModule
+import com.playbowdogs.neighbors.di.liveViewModule
+import com.playbowdogs.neighbors.di.recordedClipsListModule
+import com.playbowdogs.neighbors.di.settingsModule
+import com.playbowdogs.neighbors.firebase.firestore.SettingsViewModel
 import com.playbowdogs.neighbors.utils.Actions
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.unloadKoinModules
 
 @FlowPreview
 @InternalCoroutinesApi
 @ExperimentalCoroutinesApi
 class SettingsFragment : PreferenceFragmentCompat() {
-    private val firestoreViewModel: FirestoreViewModel by sharedViewModel()
+    private val settingsViewModel: SettingsViewModel by sharedViewModel()
 //    private val sharedViewModel: SharedViewModel by sharedViewModel()
     private val sharedPrefEdit by inject<SharedPreferences.Editor>()
 
@@ -39,11 +46,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val signOutPreference: Preference? = findPreference("signOut")
 
         signOutPreference?.setOnPreferenceClickListener {
-            firestoreViewModel.updateFCMToken(null)
+            settingsViewModel.updateFCMToken(null)
             sharedPrefEdit.clear().apply()
-            firestoreViewModel.authInstance
+            settingsViewModel.authInstance
                 .signOut(requireContext())
                 .addOnCompleteListener {
+                    unloadKoinModules(listOf(
+                        calendarModule,
+                        liveViewModule,
+                        recordedClipsListModule,
+                        settingsModule,
+                    ))
                     startActivity(Actions.openFirebaseUiIntent(requireContext()))
                     activity?.finish()
                 }

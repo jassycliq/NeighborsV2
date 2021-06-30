@@ -7,5 +7,5 @@ import org.koin.dsl.module
 
 @ExperimentalCoroutinesApi
 val firebaseAuthModule: Module = module {
-    single { FirebaseAuthRepository() }
+    factory { FirebaseAuthRepository() }
 }

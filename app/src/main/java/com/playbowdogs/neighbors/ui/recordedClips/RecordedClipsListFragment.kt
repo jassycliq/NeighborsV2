@@ -1,5 +1,6 @@
 package com.playbowdogs.neighbors.ui.recordedClips
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -7,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.lifecycleScope
 import com.playbowdogs.neighbors.R
 import com.playbowdogs.neighbors.data.adapter.RecordedClipsListAdapter
 import com.playbowdogs.neighbors.data.model.AngelCamRecordedClips
@@ -16,7 +18,9 @@ import com.playbowdogs.neighbors.utils.EMPTY_RECORDED_CLIPS
 import com.playbowdogs.neighbors.utils.Status.*
 import com.playbowdogs.neighbors.viewmodel.recordedClipsList.RecordedClipsListViewModel
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
@@ -36,7 +40,7 @@ class RecordedClipsListFragment : BaseFragment<FragmentRecordedClipsListBinding>
         setInsetPadding(view)
         insertNestedFragment()
 
-        adapter = RecordedClipsListAdapter(EMPTY_RECORDED_CLIPS, _viewModel, viewLifecycleOwner)
+        adapter = RecordedClipsListAdapter(arrayListOf(), _viewModel, viewLifecycleOwner)
         binding.fragmentRecordedClipsFragmentRecyclerView.adapter = adapter
 
         setObservers()
@@ -97,11 +101,12 @@ class RecordedClipsListFragment : BaseFragment<FragmentRecordedClipsListBinding>
         }
     }
 
-    private fun retrieveList(results: List<AngelCamRecordedClips>) {
+    @SuppressLint("NotifyDataSetChanged")
+    private fun retrieveList(results: List<AngelCamRecordedClips>) = lifecycleScope.launch(Dispatchers.IO) {
         adapter.apply {
             val sortedResult = results.sortedByDescending { it.created_at }
             addClips(sortedResult)
-            notifyDataSetChanged()
+            launch(Dispatchers.Main) { notifyDataSetChanged() }
         }
     }
 }

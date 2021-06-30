@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/navigation_camera_details"
-        android:name="com.playbowdogs.neighbors.ui.cameraDetails.CameraDetailsFragment"
+        android:name="com.playbowdogs.neighbors.ui.cameraDetails.LiveViewFragment"
         android:label="@string/title_live_view"
-        tools:layout="@layout/fragment_camera_details" />
+        tools:layout="@layout/fragment_live_view" />
 
 </navigation>
