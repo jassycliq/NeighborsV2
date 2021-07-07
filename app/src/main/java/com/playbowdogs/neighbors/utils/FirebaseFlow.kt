@@ -25,7 +25,7 @@ fun CollectionReference.getQuerySnapshotFlow(): Flow<QuerySnapshot?> {
                         )
                         return@addSnapshotListener
                     }
-                    offer(querySnapshot)
+                    trySend(querySnapshot).isSuccess
                 }
         awaitClose {
             Timber.e("cancelling the listener on collection at path - $path")
@@ -54,7 +54,7 @@ fun DocumentReference.getQuerySnapshotFlow(): Flow<DocumentSnapshot?> {
                         )
                         return@addSnapshotListener
                     }
-                    offer(querySnapshot)
+                    trySend(querySnapshot)
                 }
         awaitClose {
             Timber.e("cancelling the listener on collection at path - $path")

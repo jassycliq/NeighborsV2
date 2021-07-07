@@ -10,7 +10,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.sendBlocking
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
@@ -28,7 +28,7 @@ class FirebaseAuthRepository {
     fun getCurrentUser(): Flow<FirebaseAuth?> = callbackFlow {
         val firebaseAuthCallback = FirebaseAuth.AuthStateListener { firebaseAuth ->
             try {
-                sendBlocking(firebaseAuth)
+                trySendBlocking(firebaseAuth)
             } catch (e: Exception) {
                 Timber.e(e)
             }

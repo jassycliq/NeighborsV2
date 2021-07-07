@@ -16,6 +16,7 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
     private val notificationHelper = FirebaseNotificationHelper(this)
     private val firestoreRepository: FirestoreRepository by inject()
     private val firebaseAuthRepo: FirebaseAuthRepository by inject()
+    private val scope: CoroutineScope by inject()
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of
@@ -31,7 +32,7 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
         //
         // Also make sure that user exist before saving token
         if (firebaseAuthRepo.getUserAfterSignIn() != null) {
-            GlobalScope.launch {
+            scope.launch {
                 firestoreRepository.updateUserToken(token)
             }
         }
